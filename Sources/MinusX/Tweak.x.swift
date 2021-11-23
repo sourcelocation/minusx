@@ -3,23 +3,23 @@ import MinusXC
 import UIKit
 import os
 
-@objc protocol SBMinusCloseBoxViewPrivate {
-    var defaultContentImage: UIImage { get set }
-}
-
 @available(iOS 13.0, *)
 class SBMinusCloseBoxViewHook: ClassHook<UIButton> {
     static var targetName: String = "SBMinusCloseBoxView"
     
     func layoutSubviews() {
         orig.layoutSubviews()
-//        orig.target.setImage(UIImage(systemName: "xmark"), for: [])
+        
+//      orig.target.setImage(UIImage(systemName: "xmark"), for: [])
+//      This is what I have originaly tried, but it does not work - it also replaces the button background
+        
         for subview1 in orig.target.subviews {
             if subview1.isKind(of: Dynamic.SBHomeScreenMaterialView.class) {
                 for subview2 in subview1.subviews {
-                    logt("Found subview")
                     if let imageView = subview2 as? UIImageView {
-//                        subview2.isHidden = true
+//                      subview2.isHidden = true
+//                      Removes the icon
+                        
                         imageView.image = UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: subview1.frame.size.width * 0.4, weight: .bold))
                         imageView.tintColor = .darkGray
                         
@@ -30,17 +30,4 @@ class SBMinusCloseBoxViewHook: ClassHook<UIButton> {
             }
         }
     }
-}
-
-class SBHomeScreenViewControllerHook: ClassHook<UIViewController> {
-    static var targetName: String = "SBHomeScreenViewController"
-    
-//    func didLoad() {
-//
-//    }
-}
-
-func logt(_ string: StaticString) {
-    let log = OSLog.init(subsystem: "ovh.exerhythm.batterain", category: "main")
-    os_log(string, log: log)
 }
