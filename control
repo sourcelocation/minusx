@@ -1,0 +1,9 @@
+Package: ovh.exerhythm.minusx
+Name: MinusX
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Brings back the X buttons when deleting apps
+Maintainer: ExeRhythm
+Author: ExeRhythm
+Section: Tweaks
+Depends: ${ORION}, firmware (>= 14.0)
